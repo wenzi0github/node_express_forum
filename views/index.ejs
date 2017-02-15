@@ -7,11 +7,16 @@
   <body>
     <h1>列表</h1>
     <table>
+      <tr>
+        <td>编号</td>
+        <td>标题</td>
+        <td>作者</td>
+        <td>创建时间</td>
+      </tr>
       <% for(var i=0, len=data.length; i<len; i++) {%>
         <tr>
           <td><%=data[i].id %></td>
-          <td><%=data[i].title %></td>
-          <!-- <td><%=data[i].content %></td> -->
+          <td><a href="/list/<%=data[i].id %>.html" title="<%=data[i].title %>"><%=data[i].title %></a></td>
           <td><%=data[i].username %></td>
           <td><%=data[i].createtime %></td>
         </tr>

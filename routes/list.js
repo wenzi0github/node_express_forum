@@ -12,7 +12,7 @@ router.get('/:pid.html', function(req, res, next) {
 	var pid = req.params.pid || 1;
 
 	list_m.getListById(pid, function(result){
-		res.render('list', { data:result }); // 选择index模板并传递数据
+		res.render('list', { data:result[0] }); // 选择index模板并传递数据
 	})
 });
 
