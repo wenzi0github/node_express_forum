@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>首页</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>列表</h1>
+    <table>
+      <% for(var i=0, len=data.length; i<len; i++) {%>
+        <tr>
+          <td><%=data[i].id %></td>
+          <td><%=data[i].title %></td>
+          <!-- <td><%=data[i].content %></td> -->
+          <td><%=data[i].username %></td>
+          <td><%=data[i].createtime %></td>
+        </tr>
+      <% } %>
+    </table>
+  </body>
+</html>
