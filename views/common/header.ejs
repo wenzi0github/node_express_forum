@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%=data[0].title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+  <div class="user">
+  	<% if(user.username){ %>
+		欢迎您，<%= user.username %> | <a href="/user/logout">注销</a>
+  	<% }else{ %>
+		<a href="/user/reg" title="我要注册">注册</a> | <a href="/user/login" title="去登录">登录</a>
+  	<% } %>
+  </div>

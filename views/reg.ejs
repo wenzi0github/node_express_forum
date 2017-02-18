@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>注册</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <style type="text/css">
+    	.tip{color: #f00;}
+    </style>
+  </head>
+  <body>
+  <div class="container">
+    <p><a href="/">回到首页</a></p>
+  	<h1>注册</h1>
+  	<form action="/user/reg/" method="post">
+  		<% if(errmsg){ %>
+  		<p class="tip">*<%= errmsg %></p>
+  		<% } %>
+  		<p>用&nbsp;&nbsp;户&nbsp;&nbsp;名： <input type="text" name="username" required="required"></p>
+  		<p>密&emsp;&emsp;码： <input type="password" name="password" required="required"></p>
+      <p>重复密码： <input type="password" name="password2" required="required"></p>
+  		<p><input type="submit" name="submit" value="submit"></p>
+  	</form>
+    <p>已有帐号？ <a href="/user/login">点击登录</a></p>
+  </div>
+  </body>
+</html>

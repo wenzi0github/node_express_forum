@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var async = require('async');
 
 var list_m = require('../models/list');
 
@@ -11,9 +12,23 @@ router.get('/:pid.html', function(req, res, next) {
 	// console.log(req.params);
 	var pid = req.params.pid || 1;
 
-	list_m.getListById(pid, function(result){
-		res.render('list', { data:result[0] }); // 选择index模板并传递数据
+	async.parallel([
+		function(callback){
+			list_m.getListById(pid, function(result){
+				callback(null, result[0]);
+			})
+		},
+		function(callback){
+			list_m.getReplyById(pid, function(result){
+				callback(null, result);
+			})
+		},
+	], function(err, results){
+		// console.log( results );
+		// res.json(results);
+		res.render('list', { data:results });
 	})
+	
 });
 
 module.exports = router;

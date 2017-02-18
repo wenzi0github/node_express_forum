@@ -4,11 +4,11 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session')
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+var user = require('./routes/user');
 var list = require('./routes/list');
-var reply = require('./routes/reply');
 
 var app = express();
 
@@ -24,10 +24,29 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+  secret: 'wenzi', // 建议使用 128 个字符的随机字符串
+  cookie: { maxAge: 60*60*1000 },
+  resave : false,
+  saveUninitialized : true
+}));
+
+app.use(function(req, res, next){
+	// 如果cookie中存在，则说明已经登录
+	if( req.session.user ){
+		res.locals.user = {
+			uid : req.session.user.uid,
+			username : req.session.user.username
+		}
+	}else{
+		res.locals.user = {};
+	}
+	next();
+})
+
 app.use('/', index);
-app.use('/users', users);
+app.use('/user', user);
 app.use('/list', list);
-app.use('/reply', reply);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -41,7 +60,6 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
   // render the error page
   res.status(err.status || 500);
   res.render('error');

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>登录</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <style type="text/css">
+    	.tip{color: #f00;}
+    </style>
+  </head>
+  <body>
+  <div class="container">
+  	<p><a href="/">回到首页</a></p>
+  	<h1>登录</h1>
+  	<form action="/user/login/" method="post">
+  		<% if(errmsg){ %>
+  		<p class="tip">*<%= errmsg %></p>
+  		<% } %>
+  		<p>用户名： <input type="text" name="username" required="required"></p>
+  		<p>密&emsp;码： <input type="password" name="password" required="required"></p>
+  		<p><input type="submit" name="submit" value="submit"></p>
+  	</form>
+  	<p>还没帐号？<a href="/user/reg">点击注册</a></p>
+  </div>
+  </body>
+</html>

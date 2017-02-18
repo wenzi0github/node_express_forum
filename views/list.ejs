@@ -1,34 +1,34 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%=data.title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1>详情</h1>
-    <p>标题： <%=data.title %></p>
-    <div><%=data.content %></div>
-    <div class="reply">
-      <h2>回复</h2>
-      <div class="reply_con"></div>
+<% include common/header.ejs %>
+  <style type="text/css">
+    .answer{
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px dashed #333;
+    }
+  </style>
+  <h1>详情</h1>
+  <p>标题： <%=data[0].title %></p>
+  <div><%=data[0].content %></div>
+  <div class="reply">
+    <h2>评论</h2>
+    <div class="reply_con">
+      <table>
+        <% for(var i=0, len=data[1].length; i<len; i++) {%>
+          <tr>
+            <td><%=(i+1) %></td>
+            <td><%=data[1][i].content %></td>
+            <td><%=data[1][i].createtime %></td>
+          </tr>
+        <% } %>
+      </table>
     </div>
-  </body>
-  <script type="text/javascript" src="http://mat1.gtimg.com/libs/jquery/1.12.0/jquery.min.js"></script>
-  <script type="text/javascript">
-    $.ajax({
-      url : '/reply',
-      data : {pid:<%=data.id %>},
-      dataType : 'json',
-      type : 'get'
-    }).done(function(result){
-      // console.log(result);
-      if(result.code==0){
-        var html = '';
-        result.data.forEach(function(item, index){
-          html += '<p>'+(index+1)+'楼： '+item.content+'</p>';
-        })
-        $('.reply .reply_con').html(html);
-      }
-    })
-  </script>
-</html>
+  </div>
+  <div class="answer">
+  <% if(user.username){ %>
+    <textarea name="" id="" cols="100" rows="10"></textarea>
+    <p><input type="button" class="submit" value="提交"></p>
+  <% }else{%>
+    <p>请登录后回复。<a href="/user/login">去登录</a></p>
+  <% } %>
+  </div>
+<% include common/footer.ejs %>
