@@ -1,19 +1,66 @@
 <% include common/header.ejs %>
+  <style type="text/css">
+    .add{
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px dashed #333;
+    }
+    .add .title{width: 600px;}
+  </style>
     <h1>列表</h1>
     <table>
       <tr>
-        <td>编号</td>
         <td>标题</td>
         <td>作者</td>
         <td>创建时间</td>
       </tr>
       <% for(var i=0, len=data.length; i<len; i++) {%>
         <tr>
-          <td><%=data[i].id %></td>
           <td><a href="/list/<%=data[i].id %>.html" title="<%=data[i].title %>"><%=data[i].title %></a></td>
           <td><%=data[i].username %></td>
           <td><%=data[i].createtime %></td>
         </tr>
       <% } %>
     </table>
+    <div class="add">
+      <% if(user.username){ %>
+        <p><input type="text" class="title"></p>
+        <textarea class="content" cols="100" rows="10"></textarea>
+        <p><input type="button" class="submit" value="提交"><span class="tip"></span></p>
+        <script type="text/javascript" src="http://mat1.gtimg.com/libs/jquery/1.12.0/jquery.min.js"></script>
+        <script type="text/javascript">
+          var running = false;
+          $('.submit').on('click', function(){
+            if(running) return;
+            running = true;
+            $('.tip').text('');
+
+            var title = $('.add .title').val();
+                content = $('.add .content').val();
+            if(!title || !content){
+              $('.tip').text('*输入不能为空');
+              return;
+            }
+            $('.tip').text('数据正在提交中...');
+
+            $.ajax({
+              url : '/list/addtopic',
+              data : {title:title, content:content},
+              dataType : 'json',
+              type : 'get'
+            }).done(function(result){
+              if(result.code==0){
+                var html = '<tr><td><a href="'+result.data.url+'" title="'+result.data.title+'">'+result.data.title+'</a></td><td>'+result.data.author+'</td><td>'+result.data.createtime+'</td></tr>';
+                $('table').append(html);
+                $('.tip').text('');
+                $('.title, .content').val('');
+              }else{
+                $('.tip').text('添加失败');
+              }
+              running = false;
+            })
+          })
+        </script>
+      <% }%>
+    </div>
 <% include common/footer.ejs %>

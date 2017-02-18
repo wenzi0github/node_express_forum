@@ -34,7 +34,8 @@ module.exports = {
 		        	cb({isExisted:true});
 		        	connection.release();
 		        }else{
-		        	connection.query('INSERT INTO `user` SET `username`=?, `password`=?, `regtime`=?', [username, password, regtime], function(err, insert_res){
+		        	var params = {username:username, password:password, regtime:regtime};
+		        	connection.query('INSERT INTO `user` SET ?', params, function(err, insert_res){
 				        if(err) throw err;
 
 				        cb(insert_res);
