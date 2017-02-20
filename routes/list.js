@@ -68,7 +68,7 @@ router.get('/addtopic', function(req, res){
 			if(result.affectedRows){
 				res.json({code:0, msg:'添加成功', data:{url:'/list/'+result.insertId+'.html', title:title, author:req.session.user.username, createtime:createtime}});
 			}else{
-				res.json({code:2, msg:'添加成功，请重新尝试'})
+				res.json({code:2, msg:'添加失败，请重新尝试'})
 			}
 		});
 		

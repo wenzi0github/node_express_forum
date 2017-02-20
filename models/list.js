@@ -16,7 +16,7 @@ var func = {
 		});
 	},
 
-	// 
+	// 根据id查询主题的详情信息
 	getListById : function(id, cb){
 		pool.getConnection(function(err, connection){
 		    if(err) throw err;
@@ -31,7 +31,7 @@ var func = {
 		});
 	},
 
-	// 某个主题的相关回复
+	// 某主题的回复
 	getReplyById : function(pid, cb){
 		pool.getConnection(function(err, connection){
 		    if(err) throw err;
@@ -80,6 +80,6 @@ var func = {
 		        // 接下来connection已经无法使用，它已经被返回到连接池中 
 		    })
 		});
-	},
+	}
 }
 module.exports = func;
